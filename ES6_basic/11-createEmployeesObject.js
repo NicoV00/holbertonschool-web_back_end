@@ -1,3 +1,6 @@
-import createEmployeesObject from './11-createEmployeesObject';
-
-console.log(createEmployeesObject('Software', ['Bob', 'Sylvie']));
+export default function createEmployeesObject(departmentName, employees) {
+  const employeesObject = {
+    [`${departmentName}`]: [...employees],
+  };
+    return employeesObject;
+}
