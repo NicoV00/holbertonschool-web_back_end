@@ -1,0 +1,15 @@
+{
+  "name": "ES6_data_manipulation",
+  "version": "1.0.0",
+  "description": "more javaascript",
+  "main": "0-get_list_students.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

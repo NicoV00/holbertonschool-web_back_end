@@ -1,5 +1,10 @@
-export default function getStudentIdsSum(listStudents) {
-  const idsOfStudents = listStudents.map((idFinder) => idFinder.id);
-  const idsSummed = idsOfStudents.reduce((acum, actualNumber) => acum + actualNumber, 0);
-  return idsSummed;
+export default function updateUniqueItems(aMap) {
+  if (!(aMap instanceof Map)) {
+    throw new Error('Cannot process');
+  }
+  aMap.forEach((value, key) => {
+    if (value === 1) {
+      aMap.set(key, 100);
+    }
+  });
 }
