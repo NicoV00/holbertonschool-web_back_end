@@ -1,3 +1,8 @@
-export default function setFromArray(array) {
-  return new Set(array);
+export default function hasValuesFromArray(aSet, anArray) {
+  for (const element of anArray) {
+    if (aSet.has(element) === false) {
+      return false;
+    }
+  }
+  return true;
 }
