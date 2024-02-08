@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Task 0:
-    Simple helper function"""
+"""
+Deletion-resilient hypermedia pagination
+"""
+
 import csv
 import math
 from typing import List, Dict
-import math
 
 
 class Server:
@@ -14,6 +15,7 @@ class Server:
 
     def __init__(self):
         self.__dataset = None
+        self.__indexed_dataset = None
 
     def dataset(self) -> List[List]:
         """Cached dataset
@@ -26,31 +28,35 @@ class Server:
 
         return self.__dataset
 
-    def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-        "get_page() method of Server class"
-        assert isinstance(page, int) and isinstance(page_size, int)
-        assert page > 0 and page_size > 0
+    def indexed_dataset(self) -> Dict[int, List]:
+        """Dataset indexed by sorting position, starting at 0
+        """
+        if self.__indexed_dataset is None:
+            dataset = self.dataset()
+            truncated_dataset = dataset[:1000]
+            self.__indexed_dataset = {
+                i: dataset[i] for i in range(len(dataset))
+            }
+        return self.__indexed_dataset
 
-        indexes = index_range(page, page_size)
-        first = indexes[0]
-        last = indexes[1]
+    def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
+        "get_hyper_index() method of Server class"
+        # Assertions
+        assert type(index) == int and type(page_size) == int
+        assert 0 <= index < len(self.dataset())
+        #  This list will contain the data of the indexed_dataset()
+        data_list = []
+        next_index = index
+        # For loop to determine the info that data_list will contain
+        for _ in range(page_size):
+            while not self.indexed_dataset().get(next_index):
+                next_index += 1
+            data_list.append(self.indexed_dataset().get(next_index))
+            next_index += 1
 
-        return self.dataset()[first:last]
-
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
-        "get_hyper() method for Server class"
-        data = self.get_page(page, page_size)
-        total_pages = math.ceil(len(self.dataset()) / page_size)
         return {
-            "page_size": len(data),
-            'page': page,
-            'data': data,
-            'next_page': page + 1 if page + 1 < total_pages else None,
-            'prev_page': page - 1 if page != 1 else None,
-            'total_pages': total_pages
+            'index': index,
+            'page_size': page_size,
+            'next_index': next_index,
+            'data': data_list
         }
-
-
-def index_range(page, page_size) -> tuple:
-    """index_range() function"""
-    return (page * page_size) - page_size, page * page_size
