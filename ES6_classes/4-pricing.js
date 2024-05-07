@@ -1,4 +1,4 @@
-export default class Pricing {
+export default class {
   constructor(amount, currency) {
     this._amount = amount;
     this._currency = currency;
