@@ -1,9 +1,8 @@
-function appendToEachArrayValue(array, appendString) {
-  for (var idx in array) {
-    var value = array[idx];
-    array[idx] = appendString + value;
+export default function appendToEachArrayValue(array, appendString) {
+  const myArray = [];
+  for (const value of array) {
+    myArray.push(appendString + value);
   }
 
-  return array;
+  return myArray;
 }
-console.log(concatArrays(['a', 'b'], ['c', 'd'], 'Hello'));
