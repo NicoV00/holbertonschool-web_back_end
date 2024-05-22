@@ -1,2 +1,2 @@
-// my mongo script that inserts a document in the collection school.
+// my mongo script that inserts a document in the collection schoolk
 db.school.insert({ name: "Holberton school" });
