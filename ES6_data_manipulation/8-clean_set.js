@@ -1,4 +1,8 @@
 export default function cleanSet(set, startString) {
+  if (startString === undefined || typeof startString !== 'string') {
+    return '';
+  }
+
   let result = [];
 
   Array.from(set).forEach(string => {
